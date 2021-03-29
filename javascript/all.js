@@ -19,6 +19,7 @@ function init(){
   axios.get(url).then((res)=>{
     data = res.data.data;
     render(data);
+    renderChart();
     console.log(data)
   })
 }
@@ -72,6 +73,7 @@ function addTicket() {
   obj.rate =  ticketRate.value;
   data.push(obj);
   render(data);
+  renderChart();
 }
 //搜尋資料筆數
 function regionSearch() {
@@ -87,7 +89,39 @@ function regionSearch() {
 
     }
 }
-  render(data);
+function renderChart(){
+  let totalArea = {};
+  data.forEach(function(item,index){
+    if(totalArea[item.area]==undefined){
+      totalArea[item.area] = 1;
+    }else{
+      totalArea[item.area] +=1;
+    }
+  })
+  let newData = [];
+  let area = Object.keys(totalArea);
+  area.forEach(function(item,index){
+    let ary = [];
+    ary.push(item);
+    ary.push(totalArea[item]);
+    newData.push(ary);
+  })
+  const chart = c3.generate({
+    bindto: ".region__chart",
+    data: {
+      columns: newData,
+      type : 'donut',
+      colors: {
+        '台北': '#26C0C7',
+        '台中': '#5151D3',
+        '高雄': '#E68618'
+      }
+    },
+    donut: {
+      title: "套票地區比重"
+    }
+  });
+}
 
   //監聽事件
 addTicketBtn.addEventListener("click", addTicket);

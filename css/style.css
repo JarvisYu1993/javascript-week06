@@ -188,7 +188,6 @@ body{
   .search-area p {
     color: #818A91;
   }
-  
   @media (max-width: 768px) {
     .search-area {
       -webkit-box-orient: vertical;
@@ -200,7 +199,14 @@ body{
               justify-content: center;
     }
   }
-  
+  .region__chart{
+    width:200px;
+    height: 200px;
+    margin-left: auto;
+  }
+  .c3-chart-arcs-title{
+    font-size: 10px;
+  }
   .regionSearch {
     width: 27.5%;
     min-height: 38px;
